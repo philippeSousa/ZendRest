@@ -7,7 +7,6 @@
  */
 return array(
     'modules' => array(
-        'Application',
         'Restapi'
         ),
     'module_listener_options' => array(
