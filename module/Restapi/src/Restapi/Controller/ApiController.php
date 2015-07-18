@@ -5,7 +5,7 @@ namespace Restapi\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class AdminController extends AbstractActionController
+class ApiController extends AbstractActionController
 {
 
     public function indexAction()
@@ -13,7 +13,7 @@ class AdminController extends AbstractActionController
         return new ViewModel();
     }
 
-    public function homeAction()
+    public function postAction()
     {
         return new ViewModel();
     }

@@ -15,8 +15,9 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
-                        'action'     => 'index',
+						'__NAMESPACE__' => 'Restapi\Controller',
+						'controller'    => 'Restapi\Controller\Admin',
+                        'action'     => 'home',
                     ),
                 ),
             ),
@@ -46,6 +47,32 @@ return array(
     						),
     				),
     		),
+    		'api' => array(
+    		    'type'    => 'Literal',
+    		    'options' => array(
+    		        'route'    => '/api/country',
+    		        'defaults' => array(
+    		    								'__NAMESPACE__' => 'Restapi\Controller',
+    		    								'controller'    => 'Restapi\Controller\Api',
+    		    								'action'        => 'index',
+    		        ),
+    		    ),
+    		    'may_terminate' => true,
+    		    'child_routes' => array(
+    		        'default' => array(
+    		    								'type'    => 'Segment',
+    		    								'options' => array(
+    		    								    'route'    => '/[:controller[/:action]]',
+    		    								    'constraints' => array(
+    		    								        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
+    		    								        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
+    		    								    ),
+    		    								    'defaults' => array(
+    		    								    ),
+    		    								),
+    		        ),
+    		    ),
+    		),
         ),
     ),
     'service_manager' => array(
@@ -69,7 +96,7 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Restapi\Controller\Api' => 'Restapi\Controller\ApiController',
         	'Restapi\Controller\Admin' => 'Restapi\Controller\AdminController'
         ),
     ),
