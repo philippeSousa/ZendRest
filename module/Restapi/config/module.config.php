@@ -31,45 +31,33 @@ return array(
     								'action'        => 'index',
     						),
     				),
-    				'may_terminate' => true,
-    				'child_routes' => array(
-    						'default' => array(
-    								'type'    => 'Segment',
-    								'options' => array(
-    										'route'    => '/[:controller[/:action]]',
-    										'constraints' => array(
-    												'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-    												'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
-    										),
-    										'defaults' => array(
-    										),
-    								),
-    						),
-    				),
+    				'may_terminate' => true
     		),
     		'api' => array(
-    		    'type'    => 'Literal',
-    		    'options' => array(
-    		        'route'    => '/api/country',
-    		        'defaults' => array(
-    		    								'__NAMESPACE__' => 'Restapi\Controller',
-    		    								'controller'    => 'Restapi\Controller\Api',
-    		    								'action'        => 'index',
-    		        ),
-    		    ),
-    		    'may_terminate' => true,
-    		    'child_routes' => array(
-    		        'default' => array(
+        		    'type'    => 'Literal',
+        		    'options' => array(
+        		        'route'    => '/api/country',
+        		        'defaults' => array(
+        		    								'__NAMESPACE__' => 'Restapi\Controller',
+        		    								'controller'    => 'Restapi\Controller\Api',
+        		    								'action'        => 'index',
+        		        ),
+        		    ),
+        		    'may_terminate' => true,
+        		    'child_routes' => array(
+        		        'country' => array(
     		    								'type'    => 'Segment',
     		    								'options' => array(
-    		    								    'route'    => '/[:controller[/:action]]',
+    		    								    'route'    => '/[:iso3166]',
     		    								    'constraints' => array(
-    		    								        'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
-    		    								        'action'     => '[a-zA-Z][a-zA-Z0-9_-]*',
     		    								    ),
     		    								    'defaults' => array(
+            		    								'__NAMESPACE__' => 'Restapi\Controller',
+            		    								'controller'    => 'Restapi\Controller\Api',
+            		    								'action'        => 'get',
     		    								    ),
     		    								),
+        		    'may_terminate' => true,
     		        ),
     		    ),
     		),

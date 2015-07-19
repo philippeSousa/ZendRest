@@ -18,6 +18,11 @@ class ApiController extends AbstractActionController
         return new ViewModel();
     }
 
+    public function getAction()
+    {
+        return new ViewModel();
+    }
+
 
 }
 
