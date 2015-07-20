@@ -15,11 +15,15 @@ class AdminController extends AbstractActionController
     public function indexAction()
     {
     	
+    	
+    	
     	$form = new Form\Register;
+    	$form2 = new Form\RegisterArrayLine;
     	
     	$allCountries = $this->getAllCountries(); 
-    	
-        return new ViewModel(["allCountries" => $allCountries, "form" => $form]);
+    	$viewModel = new ViewModel(["allCountries" => $allCountries, "form" => $form, "form2" => $form2]);
+
+        return $viewModel;
     }
 
     public function homeAction()

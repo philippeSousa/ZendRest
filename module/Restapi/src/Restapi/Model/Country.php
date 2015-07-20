@@ -105,6 +105,20 @@ class Country
     	    $this->txTva =  (isset($data['txTva']))? $data['txTva'] : null;
     }
 	
+    public function toArray()
+    {
+    	    return Array (
+    	    	"id" => $this->id,
+        	    "alpha2" => $this->alpha2,
+        	    "alpha3" => $this->alpha3,
+        	    "code" => $this->code,
+        	    "devise" => $this->devise,
+        	    "nom_en_gb" => $this->nom_en_gb,
+        	    "nom_fr_fr" => $this->nom_fr_fr,
+        	    "txTva" => $this->txTva
+    	    );
+    }
+	
 }
 
 ?>

@@ -5,7 +5,7 @@ namespace Restapi\Form;
 use Zend\Form\Form;
 use Zend\Validator;
 
-class Register extends Form
+class RegisterArrayLine extends Form
 {
 	public function __construct($name = null)
 	{
@@ -21,10 +21,8 @@ class Register extends Form
 			'name' => 'alpha2',
 			'attributes' =>	[
 					'type' => 'text',
+					'size' => 3,
 					'required' => 'required'
-			],
-			'options' => [
-					'label' => 'Alpha 2 '
 			]
 		]);
 		
@@ -49,10 +47,8 @@ class Register extends Form
 			'name' => 'alpha3',
 			'attributes' =>	[
 					'type' => 'text',
+					'size' => 3,
 					'required' => 'required'
-			],
-			'options' => [
-					'label' => 'Alpha 3 '
 			]
 		]);
 		
@@ -77,10 +73,8 @@ class Register extends Form
 			'name' => 'code',
 			'attributes' =>	[
 					'type' => 'text',
+					'size' => 3,
 					'required' => 'required'
-			],
-			'options' => [
-					'label' => 'Code'
 			]
 		]);		
 
@@ -96,10 +90,8 @@ class Register extends Form
 			'name' => 'txTva',
 			'attributes' =>	[
 					'type' => 'text',
+					'size' => 3,
 					'required' => 'required'
-			],
-			'options' => [
-					'label' => 'Taux TVA'
 			]
 		]);		
 
@@ -117,9 +109,6 @@ class Register extends Form
 		    'attributes' =>	[
 		        'type' => 'text',
 		        'required' => 'required'
-		    ],
-		    'options' => [
-		        'label' => 'Devise '
 		    ]
 		]);
 		
@@ -136,9 +125,6 @@ class Register extends Form
 		    'attributes' =>	[
 		        'type' => 'text',
 		        'required' => 'required'
-		    ],
-		    'options' => [
-		        'label' => 'Nom anglais '
 		    ]
 		]);
 		
@@ -156,9 +142,6 @@ class Register extends Form
 		    'attributes' =>	[
 		        'type' => 'text',
 		        'required' => 'required'
-		    ],
-		    'options' => [
-		        'label' => 'Nom francais '
 		    ]
 		]);
 		
@@ -176,11 +159,8 @@ class Register extends Form
 			'name' => 'submit',
 			'attributes' =>	[
 					'type' => 'submit',
-					'value' => 'Enregistrer',
+					'value' => 'Enregistrer Modifs',
 					'required' => 'required'
-			],
-			'options' => [
-					'label' => ''
 			]
 		]);
 		

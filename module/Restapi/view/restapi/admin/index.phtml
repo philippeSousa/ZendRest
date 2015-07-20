@@ -2,13 +2,12 @@ Action "index", controller "Admin", module "restapi".
 
 <?php 
 
-$form = $form;
-
-echo $this->form()->render($form);
+    echo $this->form()->render($form);
 
 foreach ($allCountries as $country)
 {
-    $form->setData($country);
-    echo $this->form()->render($form);
+    $form2->setData($country->toArray());
+    echo $this->form()->render($form2);   
 }
+
 ?>
