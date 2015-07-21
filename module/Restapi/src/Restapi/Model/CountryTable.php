@@ -53,11 +53,25 @@ class CountryTable
 
 	}
 	
+	public function deleteCountry($id)
+	{
+
+		if ($this->getCountry($id)){
+			$this->tableGateway->delete(array('id' => $id));
+		}
+		 else {
+		    throw new \Exception(" The country id has not been found dude");			 	
+		 }
+		
+
+	}
+	
 	public function fetchAll()
 	{
 		$sql = $this->tableGateway->getSql();
 		$select = $sql->select();
-		$select->limit(30);
+		$select->limit(30)
+		        ->order(array('alpha2'));
 		
 		return $this->tableGateway->selectWith($select);
 	}

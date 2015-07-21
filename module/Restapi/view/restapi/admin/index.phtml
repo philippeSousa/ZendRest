@@ -1,13 +1,35 @@
-Action "index", controller "Admin", module "restapi".
-
 <?php 
 
+    /* Form pour l'ajout*/
+    echo $libelleValidation;
     echo $this->form()->render($form);
 
 foreach ($allCountries as $country)
 {
     $form2->setData($country->toArray());
-    echo $this->form()->render($form2);   
+//     echo $this->form()->render($form2)."sd";  
+    /* Form pour l'edition */
+	$form2->prepare();
+	echo '<div class="formContainer">';
+	echo $this->form()->openTag($form2);
+	echo $this->formRow($form2->get('id'));
+	echo $this->formRow($form2->get('alpha2'));
+	echo $this->formRow($form2->get('alpha3'));
+	echo $this->formRow($form2->get('code'));
+	echo $this->formRow($form2->get('txTva'));
+	echo $this->formRow($form2->get('devise'));
+	echo $this->formRow($form2->get('nom_en_gb'));
+	echo $this->formRow($form2->get('nom_fr_fr'));
+	echo "</div>";
+	echo $this->formRow($form2->get('submit'));
+	echo $this->form()->closeTag();
+	echo '<div class="formContainer">';
+	echo '<form method="post">
+			  <input type="hidden" name="suppression" value="suppression" />
+			  <input type="hidden" name="id" value="'.$country->getId().'" />
+			  <input type="submit" value="Supprimer" />
+		  </form>';
+	echo "</div>";
 }
 
 ?>

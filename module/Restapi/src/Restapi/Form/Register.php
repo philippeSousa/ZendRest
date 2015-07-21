@@ -17,6 +17,27 @@ class Register extends Form
 		$this->setAttribute('method', 'post');
 		$this->setAttribute('enctype', 'multipart/form-data');
 		
+
+		$this->add([
+		    'name' => 'id',
+		    'attributes' =>	[
+		        'type' => 'hidden',
+		        'size' => 3,
+		        'required' => 'required'
+		    ]
+		]);
+		
+		$this->getInputFilter()->add([
+		    'name' => 'id',
+		    'filters' => [
+		        ['name' => 'StringTrim'],
+		        ['name' => 'StripTags'],
+		        ['name' => 'Int']
+		    ],
+		    'validators' => [
+		    ]
+		]);
+		
 		$this->add([
 			'name' => 'alpha2',
 			'attributes' =>	[
