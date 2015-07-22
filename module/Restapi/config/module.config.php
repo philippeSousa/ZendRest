@@ -54,7 +54,7 @@ return array(
     		    								    'defaults' => array(
             		    								'__NAMESPACE__' => 'Restapi\Controller',
             		    								'controller'    => 'Restapi\Controller\Api',
-            		    								'action'        => 'get',
+            		    								'action'        => 'singleRecord',
     		    								    ),
     		    								),
         		    'may_terminate' => true,

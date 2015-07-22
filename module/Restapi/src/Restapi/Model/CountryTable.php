@@ -3,6 +3,7 @@ namespace Restapi\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use \Zend\Db\Sql\Select;
+use \Zend\Db\Sql\Where;
 
 class CountryTable
 {
@@ -23,6 +24,42 @@ class CountryTable
 		}
 		
 		return $row;
+	}
+	
+	public function getCountryWithSearch($search)
+	{
+		
+		$where = new Where();
+		$where->equalTo( 'code', $search );
+		$where->OR->equalTo( 'alpha2', $search );
+		$where->OR->equalTo( 'alpha3', $search );
+		
+		$rowset = $this->tableGateway->select(function ($select)
+		use ($where){
+		    $select->where($where);
+		});
+		
+		$row = $rowset->current();
+		
+		if (!$row){
+		   return null;
+		}
+		
+		return $row;
+	}
+	
+	public function deleteCountryWithSearch($search)
+	{
+		
+		$where = new Where();
+		$where->equalTo( 'code', $search );
+		$where->OR->equalTo( 'alpha2', $search );
+		$where->OR->equalTo( 'alpha3', $search );
+		
+		$rowset = $this->tableGateway->delete(function ($delete)
+		use ($where){
+		    $delete->where($where);
+		});
 	}
 	
 	public function saveCountry(Country $country)
@@ -74,6 +111,19 @@ class CountryTable
 		        ->order(array('alpha2'));
 		
 		return $this->tableGateway->selectWith($select);
+	}
+	
+	public function fetchAllToArray()
+	{
+		$result = Array();
+		$allCountries = $this->fetchAll();
+		
+		foreach($allCountries as $country)
+		{
+			$result[] = $country->toArray();
+		}
+		
+		return $result;
 	}
 	
 }
