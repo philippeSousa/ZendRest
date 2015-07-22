@@ -8,6 +8,7 @@ use Zend\View\Model\JsonModel;
 use Zend\Db\TableGateway\TableGateway;
 use Restapi\Model\Country;
 use Restapi\Model\CountryTable;
+use Restapi\Form;
 
 class ApiController extends AbstractActionController
 {
@@ -19,6 +20,10 @@ class ApiController extends AbstractActionController
     	 
     	$request = new \Zend\Http\PhpEnvironment\Request();
     	$methode = $request->getServer('REQUEST_METHOD');
+    	//echo ">>";var_dump($request->getContent());echo "<<";
+    	//$postRequest = new Request();
+    	
+    	// accept : $this->getRequest()
     	
     	if ($methode == "GET")
     	{
@@ -37,7 +42,41 @@ class ApiController extends AbstractActionController
         	
     	} else if ($methode == "POST")
     	{
-    		$retour["method"] = "POST"; 
+    		$sm = $this->getServiceLocator();
+    		$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+    		$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet;
+    		$resultSetPrototype->setArrayObjectPrototype(new Country);
+    		$tableGateWay = new TableGateway('country', $dbAdapter, null, $resultSetPrototype);
+    		
+    		$countryTable = new CountryTable($tableGateWay);
+    		
+    		$postContent = $request->getContent();
+    		if (trim($postContent))
+    		{
+        		//$retour["content"] = json_decode($postContent);
+        		
+        		$formReceivedData = new Form\Register;
+        		$formReceivedData->setData(json_decode($postContent,true));
+        		//$retour["insert"] = json_decode($postContent,true);
+        		if ($formReceivedData->isValid())
+        		{
+        			$newCountry = new Country();
+        			$newCountry->exchangeArray(json_decode($postContent,true));
+        			$countryTable->saveCountry($newCountry);
+        			
+        			$retour["success"] = "Donnees valides";
+        		} else {
+        			$retour["error"] = "Donnees recues non valides";
+        		}
+        		
+        		
+        		
+    		} else {
+    			$retour["error"] = "Pas de donnees recues";
+    		}
+
+    		
+    		//$retour["method"] = "POST";
     	} else {
     		$retour["error"] = "405 : Forbidden method";    		
     	}
@@ -87,6 +126,42 @@ class ApiController extends AbstractActionController
             		}
             	break;
             	
+    		    case "PATCH":
+            		$country = $countryTable->getCountryWithSearch($iso);
+            		if (isset($country))
+            		{
+            			$postContent = $request->getContent();
+            			if (trim($postContent))
+            			{
+            			    //$retour["content"] = json_decode($postContent);
+            			
+            			    $formReceivedData = new Form\Register;
+            			    $formReceivedData->setData(json_decode($postContent,true));
+            			    //$retour["insert"] = json_decode($postContent,true);
+            			    if ($formReceivedData->isValid())
+            			    {
+            			        $newCountry = new Country();
+            			        $newCountry->exchangeArray(json_decode($postContent,true));
+            			        $countryTable->saveCountry($newCountry);
+            			         
+            			        $retour["success"] = "Donnees valides";
+            			    } else {
+            			        $retour["error"] = "Donnees recues non valides";
+            			    }
+            			
+            			
+            			
+            			} else {
+            			    $retour["error"] = "Pas de donnees recues";
+            			}
+
+            			
+            			
+            		} else {
+            			$retour["error"] = "Pays non trouve";
+            		}
+            	break;
+            	
     		    case "DELETE":
             		$country = $countryTable->getCountryWithSearch($iso);
             		if (isset($country))
@@ -94,7 +169,7 @@ class ApiController extends AbstractActionController
             	       	$countryTable->deleteCountryWithSearch($iso);
             	       	$retour["success"] = "Suppression reussie";            	       	
             		} else {
-            			$retour["error"] = "Pays non trouvé";
+            			$retour["error"] = "Pays non trouve";
             		}
             	break;
             	
